@@ -29,7 +29,8 @@ async def pending_recipes(
             order_by=order_by,
             order_by_direction=direction,
             extra={
-                "user_approved": True
+                "user_approved": True,
+                "admin_approved": False
             }
         )
         return await Recipe.paginate(session, filter_par)
@@ -49,3 +50,5 @@ async def approve_recipe(
     except Exception as e:
         logger.error(e)
         raise HTTPException(status_code=500, detail=str(e))
+
+

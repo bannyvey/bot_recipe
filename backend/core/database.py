@@ -1,9 +1,6 @@
 from datetime import datetime
 from typing import Optional, Self
-
 import logging
-
-import asyncpg
 from asyncpg import UniqueViolationError, ForeignKeyViolationError
 from sqlalchemy import Integer, MetaData, func, select
 from sqlalchemy.dialects.postgresql import TIMESTAMP
@@ -13,10 +10,11 @@ from sqlalchemy.orm import as_declarative, mapped_column, Mapped
 from sqlalchemy.orm import DeclarativeBaseNoMeta as _DeclarativeBase
 
 from backend.schemas.base import BaseModel
+from config import settings
+
 
 # logger = logging.getLogger(__name__)
 
-BASE_URL = "postgresql+asyncpg://postgres:callofduty@localhost:5432/recipe_bot"
 
 
 class ModelBaseError(Exception): ...
@@ -142,7 +140,7 @@ class Base:
 
 # Асинхронный движок для Alembic
 engine = create_async_engine(
-    BASE_URL,
+    settings.create_database_url(),
     echo=False
 )
 

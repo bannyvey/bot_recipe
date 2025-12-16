@@ -1,16 +1,12 @@
 from abc import abstractmethod, ABC
-from dataclasses import field
 from typing import ClassVar, Self, Any, TYPE_CHECKING
 import logging
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.exc import NoResultFound, IntegrityError
 from fastapi_pagination import Page
 from fastapi_pagination.ext.sqlalchemy import paginate
-from sqlalchemy import select, func
 
 from backend.core.database import Base, ModelAlreadyExistsError, ModelDoesNotExistError
 from backend.core.exceptions import ModelNotFoundError, ModelExistsError
-# from backend.core.exceptions import ModelNotFoundError, ModelExistsError
 from backend.repositories.base import FilterStatementKwargs
 from backend.schemas.base import BaseModel
 

@@ -3,7 +3,6 @@ import logging
 
 from pydantic import BaseModel as PydanticBaseModel
 from pydantic import ConfigDict
-from typing import Any
 
 logger = logging.getLogger(__name__)
 

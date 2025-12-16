@@ -1,5 +1,4 @@
 import logging
-from logging import DEBUG, config
 import uvicorn
 from contextlib import asynccontextmanager
 import asyncio
@@ -7,16 +6,15 @@ from pathlib import Path
 
 from alembic import command
 from alembic.config import Config
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI
 from fastapi_pagination import add_pagination
-from starlette.responses import JSONResponse
+from starlette.middleware.cors import CORSMiddleware
 
 from backend.api import api_router
 from backend.models.category_model import CategoryModel
 from backend.models.recipe_model import RecipeModel
 from backend.models.user_model import UserModel
 from config import settings
-from logging_config import LOGGING_CONFIG
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
@@ -38,7 +36,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan, debug=False)
 
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(api_router)
 add_pagination(app)
 
